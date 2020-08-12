@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.demo.mapper.UserInfoMapper">
+
+    <insert id="insertUser" parameterType="user" >
+        insert into userinfo(id, userName, passWord, age, sex, phone)
+        values (#{id}, #{userName}, #{passWord}, #{age}, #{sex}, #{phone})
+    </insert>
+
+    <select id="queryAllUser" resultType="user">
+        select *
+        from userinfo
+    </select>
+
+    <select id="queryUser" resultType="user">
+        select id, userName, passWord, age, sex, phone from userinfo
+        <where>
+            <choose>
+                <when test="id != null">
+                    id = #{id}
+                </when>
+                <when test="phone != null and phone != ''">
+                    phone = #{phone}
+                </when>
+            </choose>
+
+        </where>
+    </select>
+
+    <update id="updateUser" parameterType="user">
+        update userinfo
+        <set>
+            <if test="userName != null and userName != ''">
+                userName = #{userName},
+            </if>
+            <if test="passWord != null and passWord != ''">
+                passWord = #{passWord},
+            </if>
+            <if test="age != null and age != 0">
+                age = #{age},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="int">
+        delete
+        from userinfo
+        where id = #{id}
+    </delete>
+
+    <insert id="insertBatch" parameterType="list">
+        insert into userinfo(id, userName, passWord, age, sex, phone)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.userName}, #{item.passWord}, #{item.age}, #{item.sex}, #{item.phone})
+        </foreach>
+    </insert>
+
+    <update id="updateBatch" parameterType="list">
+        <foreach collection="list" item="user" separator=";">
+            update userinfo
+            <set>
+                <if test="user.phone != null and user.phone != ''">
+                    phone = #{user.phone},
+                </if>
+                <if test="user.userName != null and user.userName != ''">
+                    userName = #{user.userName}
+                </if>
+            </set>
+            where id = #{user.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteBatch" parameterType="list">
+        delete from userinfo where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insertPhone" parameterType="phone" useGeneratedKeys="true" keyProperty="id">
+        insert into phone(brand, model, salary) values(#{brand}, #{model}, #{salary})
+    </insert>
+</mapper>
