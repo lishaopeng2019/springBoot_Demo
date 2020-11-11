@@ -10,9 +10,9 @@
         <!-- %logger{36} 表示 Logger 名字最长36个字符 -->
         <property name="log_pattern" value="%date{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
         <!-- 定义日志存储的路径 -->
-        <property name="file_path" value="F:\Code\log" />
+        <property name="file_path" value="E:\log4j" />
         <!-- 日志文件的最大容量，超过该值就进行备份 -->
-        <Property name="file_max_size" value="1MB"/>
+        <Property name="file_max_size" value="2MB"/>
         <Property name="file_name" value="springDemo" />
     </Properties>
 
