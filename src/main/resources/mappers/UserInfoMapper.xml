@@ -85,7 +85,4 @@
         </foreach>
     </delete>
 
-    <insert id="insertPhone" parameterType="phone" useGeneratedKeys="true" keyProperty="id">
-        insert into phone(brand, model, salary) values(#{brand}, #{model}, #{salary})
-    </insert>
 </mapper>

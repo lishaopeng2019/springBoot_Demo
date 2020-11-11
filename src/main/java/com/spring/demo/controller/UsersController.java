@@ -43,8 +43,9 @@ public class UsersController {
         if (insertNum != users.size()) { // sql执行返回结果为执行成功的数据条数，可用此来判断业务执行成功还是失败
             restResult.setStatus(Constants.StatusCode.FAIL_CODE);
             restResult.setErrorMsg("batch insert failed");
+        } else {
+            restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         }
-        restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         return restResult;
     }
     /**
@@ -61,8 +62,9 @@ public class UsersController {
         if (userManageService.insertUserInfo(user) < Constants.NumberConstants.INT_ONE) {
             restResult.setStatus(Constants.StatusCode.FAIL_CODE);
             restResult.setErrorMsg("insertUserInfo failed");
+        } else {
+            restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         }
-        restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         return restResult;
     }
 
@@ -78,8 +80,9 @@ public class UsersController {
         if (userManageService.deleteUser(userId) < Constants.NumberConstants.INT_ONE) {
             restResult.setStatus(Constants.StatusCode.FAIL_CODE);
             restResult.setErrorMsg("deleteUser failed");
+        } else {
+            restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         }
-        restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         return restResult;
     }
 
@@ -92,18 +95,18 @@ public class UsersController {
     public RestResult updateUser(@RequestBody User user) {
         log.info("request url is /update, user is {}", user.toString());
         RestResult restResult = new RestResult();
-		User returnUser = userManageService.updateUser(user);
-		if (!user.equals(returnUser)) {
+		if (userManageService.updateUser(user) == Constants.NumberConstants.INT_ONE) {
+            restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
+            restResult.setData(user); // user前台传参可以是某几个字段，因此返回的数据只包含更新过的字段
+        } else {
             restResult.setStatus(Constants.StatusCode.FAIL_CODE);
             restResult.setErrorMsg("update User failed");
         }
-        restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
-		restResult.setData(user); // user前台传参可以是某几个字段，因此返回的数据只包含更新过的字段
         return restResult;
     }
 
     /**
-     * 查询单个用户信息
+     * 使用id或phone查询单个用户信息
      */
     @GetMapping("/query")
     @ApiOperation("查询单个用户信息")
@@ -159,8 +162,9 @@ public class UsersController {
         if (updateNum < Constants.NumberConstants.INT_ONE) { // 批量更新不同于插入，它sql执行成功返回的是1
             restResult.setStatus(Constants.StatusCode.FAIL_CODE);
             restResult.setErrorMsg("batch update failed");
+        } else {
+            restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         }
-        restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         return restResult;
     }
 
@@ -175,11 +179,12 @@ public class UsersController {
         RestResult restResult = new RestResult();
         int deleteNum = userManageService.deleteBatch(ids);
         log.info("ids size is {}, update num is {}", ids.size(), deleteNum);
-        if (deleteNum < Constants.NumberConstants.INT_ONE) { // 批量更新不同于插入，它sql执行成功返回的是1
+        if (deleteNum < Constants.NumberConstants.INT_ONE) { // 批量更新不同于批量插入，它sql执行成功返回的是1
             restResult.setStatus(Constants.StatusCode.FAIL_CODE);
             restResult.setErrorMsg("batch delete failed");
+        } else {
+            restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         }
-        restResult.setStatus(Constants.StatusCode.SUCCESS_CODE);
         return restResult;
     }
 }

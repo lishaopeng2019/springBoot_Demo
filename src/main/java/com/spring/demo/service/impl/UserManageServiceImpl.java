@@ -40,9 +40,9 @@ public class UserManageServiceImpl implements UserManageService {
 
     @CachePut(cacheNames = "user", key = "#result.id")
     @Override
-    public User updateUser(User user) {
+    public int updateUser(User user) {
         log.info("updateUser, id = {}", user.getId());
-        return userInfoMapper.updateUser(user) == 1 ? user : new User();
+        return userInfoMapper.updateUser(user);
     }
 
     @Cacheable(cacheNames = "user", key = "#id")

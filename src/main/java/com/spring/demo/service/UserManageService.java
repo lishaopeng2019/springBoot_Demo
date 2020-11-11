@@ -23,7 +23,7 @@ public interface UserManageService {
     /**
      * 更新单个用户信息
      */
-    User updateUser(User user);
+    int updateUser(User user);
     /**
      * 查询单个用户信息
      */

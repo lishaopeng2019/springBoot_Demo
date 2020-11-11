@@ -1,6 +1,5 @@
 package com.spring.demo.mapper;
 
-import com.spring.demo.entity.Phone;
 import com.spring.demo.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -16,5 +15,4 @@ public interface UserInfoMapper {
     int insertBatch(List<User> users);
     int updateBatch(List<User> users);
     int deleteBatch(List<Integer> ids);
-    int insertPhone(Phone phone);
 }

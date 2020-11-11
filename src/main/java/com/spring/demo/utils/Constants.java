@@ -4,7 +4,7 @@ public interface Constants {
 
     interface NumberConstants {
         int INT_ONE = 1;
-        int INT_THREE = 1;
+        int INT_THREE = 3;
     }
 
     interface StatusCode {
